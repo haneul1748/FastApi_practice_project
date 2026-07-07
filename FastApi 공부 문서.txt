@@ -1,0 +1,23 @@
+health = 서버에 대한 응답을 받기위해 임시방편으로 만들어놓은것 (서버 죽었나 안죽었나 확인)
+FastApi -> mybatis와 같은 것을 사용하기 위해 aiosql을 사용함 동기식으로 밖에 안됨
+드라이버 pymysql + aiosql 
+설정 : config.py + .env
+연결 코드 app/db/connection.py로 연결 코드 확인
+
+파이썬에서 내부 함수 네이밍 컨벤션은 자바와 다르게 진행됨
+예 ) findAll -> get_all 이런식
+find_all 이렇게해두댐 그런데 관례/취향의 차이로 구분됨
+
+1. sql/ 파일 밑에서 .sql 파일 작성 
+(1)  -- name: get_all 이런식으로 함수이름을 쓰고
+(2)  --name: get_by_id^ 여기서 ^은 전체중 1행만 반환 만약, ^이 없다면 전체행을 반환하게됨
+
+2. (sql 문 모음)을 파이썬 함수처럼 쓸 수 있게 해주는 파일 딱 한줄 -> db/queries.py로 불러옴 
+
+3. repository에서는 이 query를 불러와서 사용가능 import문을 통해
+
+4. 응답 dto 만들기
+BaseModel 을 상속받는 이유 ->
+Lombok + Bean Validation + Jackson을 한 방에 합쳐놓은 게 BaseModel 이라고 보면 딱 맞아요. 그래서 파이썬 DTO는 class X(BaseModel): 하고 필드만 적으면 끝
+
+5.
