@@ -20,4 +20,7 @@ find_all 이렇게해두댐 그런데 관례/취향의 차이로 구분됨
 BaseModel 을 상속받는 이유 ->
 Lombok + Bean Validation + Jackson을 한 방에 합쳐놓은 게 BaseModel 이라고 보면 딱 맞아요. 그래서 파이썬 DTO는 class X(BaseModel): 하고 필드만 적으면 끝
 
-5.
+5. service 만들기
+파이썬의 인터페이스 개념 -> 두가지 방법이 존재
+1. 추상 클래스(java interface에 가장 가까움) 가깝지만 보통 안함.
+2. Protocol (덕 타이핑 기반, 파이썬 다움)

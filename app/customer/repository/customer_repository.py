@@ -1,12 +1,24 @@
-from pymysql.connections import Connection
 
-from app.db.queries import queries
+from fastapi import Depends
 
-def find_all(conn: Connection) -> list[dict]:
-    """전체 조회"""
-    return queries.customer.get_all(conn)
+from app.db.connection import get_connection
+from app.db.queries import get_queries
 
-def find_by_id(conn: Connection, customer_id: int) -> dict | None:
-    """id로 일치하는 고객 조회 (없으면 None)."""
-    return queries.customer.get_by_id(conn, id=customer_id)
 
+class CustomerRepository:
+    def __init__(self, conn, q):
+        self.conn = conn
+        self.q = q
+
+    def find_all(self) -> list[dict]:
+        return self.q.customer.get_all(self.conn)
+    
+    def find_by_id(self, customer_id: int) -> dict | None:
+        return self.q.customer.get_by_id(self.conn, id=customer_id)
+    
+def get_customer_repository( # q는 쿼리를 게터 메서드로 가져와서 의존성주입받기
+                             # conn은 커넥션을 주입받기
+        conn = Depends(get_connection),
+        q = Depends(get_queries),
+) -> CustomerRepository:
+    return CustomerRepository(conn, q)
