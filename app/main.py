@@ -5,7 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.router import api_router
 from app.core.config import settings
-
+from app.core.exception.global_exception_handlers import register_exception_handlers
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -28,6 +28,8 @@ def create_app() -> FastAPI:
         allow_methods=["*"],
         allow_headers=["*"],
     )
+
+    register_exception_handlers(app)    # main.py에 exception_handler (등록 미들웨어뒤, 라우터 앞 아무데나)
 
     app.include_router(api_router, prefix=settings.api_v1_prefix)
 

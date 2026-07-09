@@ -13,3 +13,8 @@ router = APIRouter(prefix="/customers", tags=["customer"])
 @router.get("", response_model=list[CustomerResponse])
 def list_customers(service: CustomerServiceDep):
     return service.get_all()
+
+@router.get("/{customer_id}", response_model=CustomerResponse)
+def list_customer_id(customer_id: int, service: CustomerServiceDep):
+    return service.get_by_id(customer_id)
+
